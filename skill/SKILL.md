@@ -22,7 +22,8 @@ When the signals are mixed, round up one tier.
 
 ## Routing (auto mode)
 
-1. Read the request and pick a tier.
+1. Read the request and pick a tier. Find your own tier by matching the model
+   you are running on to `tiers.md`; if it isn't listed, assume regular.
 2. Same tier as the model you are running on: do the work directly. No handoff.
 3. Different tier: hand it to the matching helper (`router-light`,
    `router-regular` or `router-heavy`) with a sharp brief (see below).
@@ -53,6 +54,10 @@ helper for follow-up tasks in a session so it keeps its context.
 If your agent cannot launch a helper on a different model, you are in manual
 mode. Say so once, plainly, and do not claim any switch happened.
 
+If no `router-<tier>` helper is installed for your agent, you are in manual mode
+even after `router auto`. Only write a tag naming a model if that exact helper
+ran.
+
 Never say a switch happened unless a helper actually ran.
 
 ## Sharp briefs
@@ -71,13 +76,13 @@ The helper should never need to search for something you already know.
 File: `.model-router/context.md` in the project root. Example:
 
 ```
-mode: auto
 Project: Next.js site, Tailwind
 Key files: app/page.tsx (home), components/Button.tsx
 Decisions: brand green = #16a34a, no new dependencies
 Current task: redesigning signup flow
 ```
 
+- Read it once per conversation; re-read it only after you change it.
 - Helpers read it before working. Tell them to in the brief.
 - Update it when a decision changes, and trim it. Hard cap: about 40 lines.
 - Never put secrets, keys, tokens or personal data in it.
@@ -88,11 +93,13 @@ Current task: redesigning signup flow
 
 - `mode: auto` (default): route as above.
 - `mode: manual`: work on whatever model the user picked. When the recommended
-  tier differs from the current model, add one line at the top, for example
+  tier differs from your own tier (matched via `tiers.md`, regular if unlisted),
+  add one line at the top, for example
   `Light task: switch to Haiku to save tokens.` Say it only when the tier changes
   from the previous message, never on every message.
-- The user switches by saying `router auto` or `router manual`. Save the choice
-  as the `mode:` line in `.model-router/context.md`. It persists for the project.
+- The user switches by saying `router auto` or `router manual`. A `mode:` line
+  is written to `.model-router/context.md` only when the user says `router auto`
+  or `router manual`, and it then applies to every agent working in this project.
 - With no memory file, use the default mode from your instruction block (the
-  always-loaded router lines). If that says nothing, use auto.
+  always-loaded router lines). If that says nothing, use auto in Claude Code, manual everywhere else.
 - On agents with no helper support, run in manual mode and say so once.

@@ -62,7 +62,7 @@ export async function install({ home, ask, log }) {
     if (agent.agentsDir && names.length) {
       let name = names[0];
       if (names.length > 1) {
-        const a = (await ask(`Which models should ${agent.name} use?`, ['claude', 'openai', 'google'])).trim().toLowerCase();
+        const a = (await ask(`Which models should ${agent.name} use?`, names)).trim().toLowerCase();
         name = names.includes(a) ? a : names.includes('claude') ? 'claude' : names[0];
       }
       for (const tier of TIERS) {
@@ -78,6 +78,12 @@ export async function install({ home, ask, log }) {
     const path = abs(home, agent.instructions);
     const answer = await ask(`Add the model-router line to ${path}?`, ['yes', 'no']);
     if (!/^y/i.test(answer.trim())) {
+      const have = await read(path);
+      if (have !== null && removeBlock(have).removed) {
+        m.blocks.push(path);
+        log(`kept existing model-router line in ${path}`);
+        continue;
+      }
       warn(`${path} not changed: the router only runs when called by name in ${agent.name}`);
       continue;
     }

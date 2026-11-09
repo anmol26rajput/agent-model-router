@@ -80,7 +80,6 @@ flowchart LR
 Helpers start with a blank slate, so the router keeps a tiny notes file at `.model-router/context.md`:
 
 ```text
-mode: auto
 Project: Next.js site, Tailwind
 Key files: app/page.tsx (home), components/Button.tsx
 Decisions: brand green = #16a34a, no new dependencies
@@ -132,18 +131,18 @@ Most coding agents can now run helper agents locked to one model, and that's wha
 | **Claude Code** | ✅ | being verified first |
 | **Codex** | ✅ | not yet verified, ships in manual mode until it is |
 | **Gemini CLI** | ✅ | not yet verified, ships in manual mode until it is |
-| **GitHub Copilot** | ✅ | not yet verified; stays manual if each handoff costs an extra premium request |
-| **OpenCode** | ✅ | not yet verified, ships in manual mode until it is |
-| **Cursor** | ⚠️ | not yet verified; some users report the helper's model setting gets ignored |
+| **GitHub Copilot** | ✅ | offers Claude or OpenAI models; not yet verified; stays manual if each handoff costs an extra premium request |
+| **OpenCode** | ➖ | skill + instruction line only, no helpers until model IDs are confirmed |
+| **Cursor** | ➖ | skill + instruction line only, no helpers until model IDs are confirmed |
 | **Aider** | ➖ | manual only (its model roles are fixed, not per message) |
 | **Windsurf, Cline, Roo** | ➖ | manual only (no confirmed way to run helpers on their own model) |
 
-Unverified agents can still opt in with `router auto`. Want to help verify one? See [Contributing](#contributing).
+Unverified agents can still opt in with `router auto` (agents with helpers only). Want to help verify one? See [Contributing](#contributing).
 
 ## Install
 
 > [!NOTE]
-> model-router is still being built. The commands below are the plan, not something you can run yet. Star the repo to hear when it ships.
+> model-router isn't on npm yet. From a clone, run `node bin/model-router.js install`. The `npx` commands below are what it will look like once published.
 
 ```bash
 npx model-router install
@@ -151,8 +150,8 @@ npx model-router install
 
 The installer:
 
-- finds which agents you have and installs the skill plus three helpers (`router-light`, `router-regular`, `router-heavy`) into each one's user folder, so it works in every project
-- asks which company's models to use for agents that support several (Copilot, Cursor, OpenCode), defaulting to Claude
+- finds which agents you have and installs the skill into each one's user folder, so it works in every project, plus three helpers (`router-light`, `router-regular`, `router-heavy`) for the agents that support them (Claude Code, Codex, Gemini CLI, Copilot)
+- asks which company's models to use when an agent offers several (today only Copilot), defaulting to Claude
 - **asks before** adding a short, clearly marked block to each agent's always-on instructions file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md` and so on), so the router runs on every message
 - never overwrites a file it didn't create
 

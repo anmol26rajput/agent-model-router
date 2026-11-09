@@ -69,6 +69,34 @@ test('answer no: skill installed, CLAUDE.md untouched, warning given', withHome(
   assert.equal(read(home, '.claude', 'CLAUDE.md'), '# rules\n');
 }));
 
+test('answer no but our block already there: keep it, track it, no called-by-name warning', withHome(['.claude'], async (home) => {
+  await run(home);
+  const p = join(home, '.claude', 'CLAUDE.md');
+  const before = readFileSync(p, 'utf8');
+  const lines = [];
+  const r = await install({ home, ask: scripted({ line: 'no' }), log: (l) => lines.push(l) });
+  assert.equal(readFileSync(p, 'utf8'), before);
+  assert.ok(lines.some((l) => l === `kept existing model-router line in ${p}`));
+  assert.ok(!r.warnings.some((w) => w.includes('called by name')));
+  assert.ok(JSON.parse(read(home, '.model-router', 'manifest.json')).blocks.includes(p));
+  await uninstall({ home, log: () => {} });
+  assert.ok(!has(home, '.claude', 'CLAUDE.md'));
+}));
+
+test('provider choices are the agent\'s own providers (copilot has no google)', withHome(['.copilot'], async (home) => {
+  const seen = [];
+  await install({ home, log: () => {}, ask: async (q, c) => { if (MODEL_Q.test(q)) seen.push(c); return ''; } });
+  assert.deepEqual(seen, [['claude', 'openai']]);
+}));
+
+test('refused install reports no installed items and an install stopped warning', withHome(['.claude'], async (home) => {
+  mkdirSync(join(home, '.model-router'));
+  writeFileSync(join(home, '.model-router', 'manifest.json'), '{nope');
+  const r = await run(home);
+  assert.ok(r.warnings.some((w) => w.includes('install stopped')));
+  assert.equal(r.installed.length, 0);
+}));
+
 test('uninstall restores the user file exactly', withHome(['.claude'], async (home) => {
   writeFileSync(join(home, '.claude', 'CLAUDE.md'), '# rules\n');
   await run(home);

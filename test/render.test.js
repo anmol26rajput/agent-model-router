@@ -38,3 +38,24 @@ test('instruction block names the skill and the default mode', () => {
     assert.match(b, new RegExp(`default mode: ${a.defaultMode}`, 'i'));
   }
 });
+test('helper descriptions only invite delegation from the skill, on one line', () => {
+  for (const t of ['light', 'regular', 'heavy']) {
+    const { content } = renderHelper(AGENTS.find(a => a.id === 'claude'), t, 'x');
+    assert.match(content, /^description: Only for tasks handed over by the model-router skill in auto mode\. .+$/m);
+    const toml = renderHelper(AGENTS.find(a => a.id === 'codex'), t, 'x').content;
+    assert.match(toml, /^description = "Only for tasks handed over by the model-router skill in auto mode\. .+"$/m);
+  }
+});
+test('instruction block loads the skill once per conversation', () => {
+  const b = renderInstructionBlock(AGENTS[0]);
+  assert.match(b, /Load the `model-router` skill once per conversation, then size every task by its rules\./);
+  assert.match(b, /router auto/);
+  assert.match(b, /router manual/);
+});
+test('agents without helpers say manual mode only', () => {
+  const none = /No router helpers are installed for this agent: manual mode only\./;
+  for (const a of AGENTS) {
+    const hasHelpers = a.agentsDir && Object.keys(a.providers).length > 0;
+    assert.equal(none.test(renderInstructionBlock(a)), !hasHelpers, a.id);
+  }
+});

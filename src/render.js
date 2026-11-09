@@ -1,7 +1,7 @@
 const DESCRIPTIONS = {
-  light: 'Light worker for small, clearly specified tasks. Use when the brief is narrow and low-risk.',
-  regular: 'Regular worker for ordinary multi-file tasks. Use when the brief needs normal engineering judgment.',
-  heavy: 'Heavy worker for hard, ambiguous or high-risk tasks. Use when the brief needs deep reasoning.',
+  light: 'Only for tasks handed over by the model-router skill in auto mode. Light worker for small, clearly specified tasks. Use when the brief is narrow and low-risk.',
+  regular: 'Only for tasks handed over by the model-router skill in auto mode. Regular worker for ordinary multi-file tasks. Use when the brief needs normal engineering judgment.',
+  heavy: 'Only for tasks handed over by the model-router skill in auto mode. Heavy worker for hard, ambiguous or high-risk tasks. Use when the brief needs deep reasoning.',
 };
 
 function body(tier) {
@@ -35,9 +35,13 @@ export function renderHelper(agent, tier, model) {
 }
 
 export function renderInstructionBlock(agent) {
-  return [
-    'Before every task, use the `model-router` skill to pick the light, regular or heavy tier.',
+  const lines = [
+    'Load the `model-router` skill once per conversation, then size every task by its rules.',
     `Default mode: ${agent.defaultMode}.`,
     'The user switches with `router auto` or `router manual`.',
-  ].join('\n');
+  ];
+  if (!agent.agentsDir || Object.keys(agent.providers).length === 0) {
+    lines.push('No router helpers are installed for this agent: manual mode only.');
+  }
+  return lines.join('\n');
 }

@@ -42,7 +42,7 @@ async function ask(question, choices) {
   for (;;) {
     process.stdout.write(`${question} (${choices.join('/')}, default ${choices[0]}) `);
     const { value, done } = await lines.next();
-    if (done) { process.stdout.write('\n'); return choices[0]; }
+    if (done) { process.stdout.write('\n'); return choices.includes('no') ? 'no' : choices[0]; }
     const a = value.trim().toLowerCase();
     if (a === '') return choices[0];
     if (choices.includes(a)) return a;
@@ -51,9 +51,13 @@ async function ask(question, choices) {
 }
 
 try {
-  if (cmd === 'uninstall') await uninstall({ home, log });
+  if (cmd === 'uninstall') {
+    const r = await uninstall({ home, log });
+    log(`\nRemoved: ${r.installed.length} files, ${r.blocks.length} blocks, warnings: ${r.warnings.length}`);
+  }
   else {
     const r = await install({ home, ask, log });
+    if (r.installed.length === 0 && r.warnings.some((w) => w.includes('install stopped'))) process.exitCode = 1;
     log(`\nInstalled: ${r.installed.length}, skipped: ${r.skipped.length}, warnings: ${r.warnings.length}`);
     for (const a of AGENTS) {
       if (existsSync(join(home, a.detect))) log(`${a.name}: ${a.defaultMode} mode`);
