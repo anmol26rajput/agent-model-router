@@ -128,16 +128,19 @@ Most coding agents can now run helper agents locked to one model, and that's wha
 
 | Agent | Auto mode | Status |
 |---|:---:|---|
-| **Claude Code** | ✅ | being verified first |
+| **Claude Code** | ✅ | verified: installs, hands one-shot heavy work to Opus, uninstall restores `CLAUDE.md` byte for byte |
 | **Codex** | ✅ | not yet verified, ships in manual mode until it is |
 | **Gemini CLI** | ✅ | not yet verified, ships in manual mode until it is |
 | **GitHub Copilot** | ✅ | offers Claude or OpenAI models; not yet verified; stays manual if each handoff costs an extra premium request |
 | **OpenCode** | ➖ | skill + instruction line only, no helpers until model IDs are confirmed |
-| **Cursor** | ➖ | skill + instruction line only, no helpers until model IDs are confirmed |
+| **Cursor** | ➖ | skill only; the installer prints the line to paste into Cursor's rules. No helpers until model IDs are confirmed |
 | **Aider** | ➖ | manual only (its model roles are fixed, not per message) |
 | **Windsurf, Cline, Roo** | ➖ | manual only (no confirmed way to run helpers on their own model) |
 
 Unverified agents can still opt in with `router auto` (agents with helpers only). Want to help verify one? See [Contributing](#contributing).
+
+> [!TIP]
+> **Aider** already has its own split. Run it in architect mode with a heavy-tier model as the architect and a light-tier model as the editor, for example `aider --architect --model opus --editor-model haiku`.
 
 ## Install
 
@@ -198,15 +201,25 @@ It writes its own skill and helper files, plus a small notes file per project. I
 <details>
 <summary><b>How much will I save?</b></summary>
 <br>
-We don't have real numbers yet and won't make any up. A before-and-after test on Claude Code is part of the first release, and the results will go here.
+One test so far, on Claude Code. Same 15 requests (5 light, 5 regular, 5 heavy) in a small sample project, each run as one session:
+<br><br>
+
+| Setup | Cost |
+|---|---|
+| No router, everything on Opus | $2.70 |
+| Router on, main session on Sonnet | $2.32 |
+
+That's about **14% less** on this run. Most of the saving came from doing regular work on Sonnet instead of Opus. Light tasks stayed on Sonnet too, because handing a one-line edit to Haiku costs more than just doing it. One run on a small project is a hint, not proof, so expect your numbers to differ.
 </details>
 
 ## Roadmap
 
 - [x] Design
-- [ ] Skill and helpers for Claude Code
-- [ ] Before-and-after savings test
-- [ ] Installer (`npx model-router install`)
+- [x] Skill and helpers for Claude Code
+- [x] Before-and-after savings test (first run)
+- [x] Installer (runs from a clone; not on npm yet)
+- [ ] Tune the tier rules from the first test
+- [ ] Publish to npm under a free name
 - [ ] Verify Codex, Gemini CLI, Copilot, OpenCode, Cursor
 - [ ] Router proxy for API-key users (maybe)
 
