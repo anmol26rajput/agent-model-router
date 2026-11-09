@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="model-router: the right model for every message" width="100%">
+<img src="assets/banner.svg" alt="agent-model-router: the right model for every message" width="100%">
 
 <br>
 
@@ -30,7 +30,7 @@ Most of a normal working day is small stuff. Paying top-tier prices for all of i
 <img src="assets/flow.svg" alt="Animation: messages go into the router and are sent to Haiku, Sonnet or Opus depending on how hard they are" width="100%">
 </div>
 
-model-router sits inside your agent and asks one question before every task: **how hard is this, really?**
+agent-model-router sits inside your agent and asks one question before every task: **how hard is this, really?**
 
 | Tier | Claude model | What lands here |
 |:---:|:---:|---|
@@ -145,10 +145,10 @@ Unverified agents can still opt in with `router auto` (agents with helpers only)
 ## Install
 
 > [!NOTE]
-> model-router isn't on npm yet. From a clone, run `node bin/model-router.js install`. The `npx` commands below are what it will look like once published.
+> agent-model-router isn't on npm yet. From a clone, run `node bin/agent-model-router.js install`. The `npx` commands below are what it will look like once published.
 
 ```bash
-npx model-router install
+npx agent-model-router install
 ```
 
 The installer:
@@ -161,7 +161,7 @@ The installer:
 Changed your mind?
 
 ```bash
-npx model-router uninstall
+npx agent-model-router uninstall
 ```
 
 That removes everything it added, including just its own block inside your instruction files.

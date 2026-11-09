@@ -6,11 +6,11 @@ import { join } from 'node:path';
 import { install, uninstall } from '../src/install.js';
 import { AGENTS } from '../src/agents.js';
 
-const HELP = `Usage: model-router <command> [--home <dir>]
+const HELP = `Usage: agent-model-router <command> [--home <dir>]
 
 Commands:
   install     Install the model-router skill and agents for detected tools
-  uninstall   Remove everything model-router installed
+  uninstall   Remove everything agent-model-router installed
 
 Options:
   --home <dir>  Use <dir> instead of your home directory (for testing)
@@ -64,7 +64,7 @@ try {
     }
   }
 } catch (e) {
-  console.error(`model-router: ${e.message}`);
+  console.error(`agent-model-router: ${e.message}`);
   process.exitCode = 1;
 } finally {
   rl.close();

@@ -1,8 +1,8 @@
 {
-  "name": "model-router",
+  "name": "agent-model-router",
   "version": "0.1.0",
   "type": "module",
-  "bin": { "model-router": "bin/model-router.js" },
+  "bin": { "agent-model-router": "bin/agent-model-router.js" },
   "engines": { "node": ">=18" },
   "scripts": { "test": "node --test" },
   "files": ["bin", "src", "skill"],

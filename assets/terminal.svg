@@ -20,7 +20,7 @@
   <circle cx="24" cy="20" r="6" fill="#f87171"/>
   <circle cx="44" cy="20" r="6" fill="#fbbf24"/>
   <circle cx="64" cy="20" r="6" fill="#34d399"/>
-  <text x="450" y="25" text-anchor="middle" class="dim" style="font-size:13px">your agent + model-router · auto mode</text>
+  <text x="450" y="25" text-anchor="middle" class="dim" style="font-size:13px">your agent + agent-model-router · auto mode</text>
 
   <!-- 1: light -->
   <text x="28" y="90" clip-path="url(#c0)"><tspan class="dim">&gt; </tspan><tspan class="you">make the signup button green</tspan></text>

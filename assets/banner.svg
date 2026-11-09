@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="model-router: the right model for every message">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="agent-model-router: the right model for every message">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#07070d"/>
@@ -78,10 +78,10 @@
   </g>
 
   <!-- glitch title -->
-  <g class="t" font-size="92" text-anchor="middle">
-    <text x="600" y="180" fill="#22d3ee" class="g1">model-router</text>
-    <text x="600" y="180" fill="#fb923c" class="g2">model-router</text>
-    <text x="600" y="180" fill="url(#title)" filter="url(#soft)">model-router</text>
+  <g class="t" font-size="80" text-anchor="middle">
+    <text x="600" y="180" fill="#22d3ee" class="g1">agent-model-router</text>
+    <text x="600" y="180" fill="#fb923c" class="g2">agent-model-router</text>
+    <text x="600" y="180" fill="url(#title)" filter="url(#soft)">agent-model-router</text>
   </g>
 
   <!-- typed tagline -->

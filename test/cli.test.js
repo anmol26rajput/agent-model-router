@@ -5,7 +5,7 @@ import { mkdtempSync, mkdirSync, existsSync, rmSync, readFileSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const cli = (args, opts = {}) => spawnSync(process.execPath, ['bin/model-router.js', ...args], { encoding: 'utf8', timeout: 20000, ...opts });
+const cli = (args, opts = {}) => spawnSync(process.execPath, ['bin/agent-model-router.js', ...args], { encoding: 'utf8', timeout: 20000, ...opts });
 
 test('--help exits 0 and lists commands', () => {
   const r = cli(['--help']);
