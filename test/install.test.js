@@ -6,6 +6,10 @@ import { join } from 'node:path';
 import { install, uninstall } from '../src/install.js';
 import { MARK_START, MARK_END } from '../src/block.js';
 import { AGENTS } from '../src/agents.js';
+import { renderHelper } from '../src/render.js';
+import { createHash } from 'node:crypto';
+
+const sha = (t) => createHash('sha256').update(t).digest('hex');
 
 const MODEL_Q = /^Which models should/;
 const LINE_Q = /^Add the model-router line/;
@@ -61,6 +65,8 @@ test('answer no: skill installed, CLAUDE.md untouched, warning given', withHome(
   assert.equal(read(home, '.claude', 'CLAUDE.md'), '# rules\n');
   assert.ok(has(home, '.claude', 'skills', 'model-router', 'SKILL.md'));
   assert.ok(r.warnings.some((w) => w.includes('called by name')));
+  await uninstall({ home, log: () => {} });
+  assert.equal(read(home, '.claude', 'CLAUDE.md'), '# rules\n');
 }));
 
 test('uninstall restores the user file exactly', withHome(['.claude'], async (home) => {
@@ -141,4 +147,74 @@ test('undetected agents get nothing', withHome(['.claude'], async (home) => {
   await run(home);
   assert.ok(!has(home, '.codex'));
   assert.ok(!has(home, '.gemini'));
+}));
+
+test('re-install updates our own older helper in place', withHome(['.claude'], async (home) => {
+  await run(home);
+  const p = join(home, '.claude', 'agents', 'router-light.md');
+  const mp = join(home, '.model-router', 'manifest.json');
+  const m = JSON.parse(readFileSync(mp, 'utf8'));
+  writeFileSync(p, 'older version');
+  m.hashes[p] = sha('older version');
+  writeFileSync(mp, JSON.stringify(m));
+  const r = await run(home);
+  const claude = AGENTS.find((a) => a.id === 'claude');
+  assert.equal(readFileSync(p, 'utf8'), renderHelper(claude, 'light', claude.providers.claude.light).content);
+  assert.ok(!r.skipped.includes(p));
+}));
+
+test('re-install keeps a helper the user edited', withHome(['.claude'], async (home) => {
+  await run(home);
+  const p = join(home, '.claude', 'agents', 'router-light.md');
+  writeFileSync(p, 'edited');
+  const r = await run(home);
+  assert.equal(readFileSync(p, 'utf8'), 'edited');
+  assert.ok(r.skipped.includes(p));
+}));
+
+test('uninstall keeps a file edited after install and warns', withHome(['.claude'], async (home) => {
+  await run(home);
+  const p = join(home, '.claude', 'agents', 'router-light.md');
+  writeFileSync(p, 'edited');
+  const r = await uninstall({ home, log: () => {} });
+  assert.equal(readFileSync(p, 'utf8'), 'edited');
+  assert.ok(r.warnings.some((w) => w.includes(p) && w.includes('edited')));
+  assert.ok(!has(home, '.claude', 'agents', 'router-heavy.md'));
+}));
+
+test('failure mid-install still records what was created', withHome(['.claude', '.codex'], async (home) => {
+  let n = 0;
+  await assert.rejects(install({ home, log: () => {}, ask: async (q) => { if (++n === 2) throw new Error('boom'); return 'yes'; } }), /boom/);
+  const m = JSON.parse(read(home, '.model-router', 'manifest.json'));
+  assert.ok(m.files.includes(join(home, '.claude', 'skills', 'model-router', 'SKILL.md')));
+  assert.equal(m.blocks.length, 1);
+  await uninstall({ home, log: () => {} });
+  assert.ok(!has(home, '.claude', 'skills', 'model-router', 'SKILL.md'));
+}));
+
+test('corrupt manifest: install refuses, uninstall removes nothing', withHome(['.claude'], async (home) => {
+  mkdirSync(join(home, '.model-router'));
+  writeFileSync(join(home, '.model-router', 'manifest.json'), '{nope');
+  const r = await run(home);
+  assert.ok(r.warnings.some((w) => w.includes('manifest unreadable')));
+  assert.ok(!has(home, '.claude', 'skills'));
+  const u = await uninstall({ home, log: () => {} });
+  assert.ok(u.warnings.some((w) => w.includes('manifest unreadable') && w.includes('nothing removed')));
+  assert.equal(read(home, '.model-router', 'manifest.json'), '{nope');
+}));
+
+test('manifest entries outside home are never touched', withHome(['.claude'], async (home) => {
+  const outside = mkdtempSync(join(tmpdir(), 'mr-out-'));
+  try {
+    const f = join(outside, 'f.txt'); const b = join(outside, 'b.md');
+    const blockText = `${MARK_START}\nx\n${MARK_END}\n`;
+    writeFileSync(f, 'keep'); writeFileSync(b, blockText);
+    mkdirSync(join(home, '.model-router'));
+    writeFileSync(join(home, '.model-router', 'manifest.json'),
+      JSON.stringify({ files: [f], blocks: [b], createdInstructionFiles: [b], hashes: { [f]: sha('keep') } }));
+    const r = await uninstall({ home, log: () => {} });
+    assert.equal(readFileSync(f, 'utf8'), 'keep');
+    assert.equal(readFileSync(b, 'utf8'), blockText);
+    assert.equal(r.warnings.filter((w) => w.includes('outside')).length, 2);
+  } finally { rmSync(outside, { recursive: true, force: true }); }
 }));
