@@ -201,15 +201,15 @@ It writes its own skill and helper files, plus a small notes file per project. I
 <details>
 <summary><b>How much will I save?</b></summary>
 <br>
-One test so far, on Claude Code. Same 15 requests (5 light, 5 regular, 5 heavy) in a small sample project, each run as one session:
+Tested on Claude Code with the same 15 requests (5 light, 5 regular, 5 heavy) in a small sample project, each run as one session:
 <br><br>
 
 | Setup | Cost |
 |---|---|
 | No router, everything on Opus | $2.70 |
-| Router on, main session on Sonnet | $2.32 |
+| Router on, main session on Sonnet | $2.47 |
 
-That's about **14% less** on this run. Most of the saving came from doing regular work on Sonnet instead of Opus. Light tasks stayed on Sonnet too, because handing a one-line edit to Haiku costs more than just doing it. One run on a small project is a hint, not proof, so expect your numbers to differ.
+That's about **9% less**, and every one of the 15 requests was routed the way the rules say. Light and regular work stayed on Sonnet, three one-shot heavy tasks went to the Opus helper, and two design discussions got a "switch to Opus" suggestion instead of a handoff. Light tasks never reached Haiku: handing a one-line edit to a helper costs more than just doing it. One run on a small project is a hint, not proof, so expect your numbers to differ.
 </details>
 
 ## Roadmap
@@ -218,7 +218,7 @@ That's about **14% less** on this run. Most of the saving came from doing regula
 - [x] Skill and helpers for Claude Code
 - [x] Before-and-after savings test (first run)
 - [x] Installer (runs from a clone; not on npm yet)
-- [ ] Tune the tier rules from the first test
+- [x] Tune the tier rules from the first test
 - [ ] Publish to npm under a free name
 - [ ] Verify Codex, Gemini CLI, Copilot, OpenCode, Cursor
 - [ ] Router proxy for API-key users (maybe)

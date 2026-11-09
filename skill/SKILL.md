@@ -14,9 +14,9 @@ for each provider. `samples.md` has example requests with their tiers.
 
 | Tier | Typical work |
 |---|---|
-| Light | One file, small edit (about 20 lines or fewer), clear instruction, no design decision: colour, text or spacing tweaks, renames, typos, formatting, short copy (under about 150 words), simple lookups |
+| Light | One file, small edit (about 20 lines or fewer), clear instruction, no design decision: colour, text or spacing tweaks, renames inside one file (however many occurrences), typos, formatting, short copy (under about 150 words), simple lookups |
 | Regular | Multi-file features, research with sources, articles and longer writing, explaining code, debugging with a clear error message |
-| Heavy | Architecture and system design, maths, algorithms and calculations, bugs that survived one fix attempt, security-sensitive changes, migrations, large refactors, anything where a wrong answer is costly |
+| Heavy | Architecture and system design, maths, algorithms and calculations, bugs that survived one fix attempt (even if the next fix looks small), security-sensitive changes, migrations, large refactors, anything where a wrong answer is costly |
 
 When the signals are mixed, round up one tier.
 
@@ -33,14 +33,20 @@ When the signals are mixed, round up one tier.
 5. Escalation: if a helper fails, says it is unsure, or its result fails an
    obvious check (does not build, does not answer the question), retry once on
    the next tier up. Never step down a tier in the middle of a task.
-6. End each reply with a short tag naming the tier and model that did the work,
-   for example `[router: light → haiku]`. Use the model name from `tiers.md`.
-   If you did the work yourself, tag it the same way with your own tier.
+6. End each reply with exactly one tag, in one of these three forms and nothing
+   else inside the brackets (explanations go outside them):
+   - a helper ran: `[router: <tier> → <helper's model>]`, e.g. `[router: heavy → opus]`
+   - you did it yourself: `[router: <tier> → <your model>]`, e.g. `[router: light → sonnet]`
+   - you suggested switching (step 7): `[router: heavy → switch suggested]`
+   Use model names from `tiers.md`.
 7. Heavy work that needs back-and-forth (architecture discussions, multi-round
    debugging) is not handed off, because helpers return one result and cannot
    talk to the user. Even in auto mode, suggest in one line that the user switch
-   the main model to the heavy tier. One-shot heavy work (a calculation, a
-   well-specified refactor) still goes to `router-heavy`.
+   the main model to the heavy tier. Count it as back-and-forth only when the
+   user invites a discussion or the work cannot start without their decisions.
+   One-shot heavy work still goes to `router-heavy`: a calculation, a
+   well-specified refactor, or a bug that survived a fix (put the failed fix in
+   the brief). Do not keep heavy work yourself because it looks small.
 
 The best main model is the regular tier, so routing runs on a mid-priced model
 and regular work needs no handoff.
@@ -91,7 +97,7 @@ Current task: redesigning signup flow
 
 ## Modes
 
-- `mode: auto` (default): route as above.
+- `mode: auto`: route as above. (Which mode is the default is covered below.)
 - `mode: manual`: work on whatever model the user picked. When the recommended
   tier differs from your own tier (matched via `tiers.md`, regular if unlisted),
   add one line at the top, for example
