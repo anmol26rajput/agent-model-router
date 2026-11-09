@@ -1,7 +1,6 @@
 export const TIERS = ['light', 'regular', 'heavy'];
 
 const claude = { light: 'haiku', regular: 'sonnet', heavy: 'opus' };
-const google = { light: 'gemini-3.5-flash-lite', regular: 'gemini-3.8-flash', heavy: 'gemini-4-argon' };
 
 // Paths and model IDs checked against vendor docs on 2026-11-09 (see `docs`).
 export const AGENTS = [
@@ -23,17 +22,17 @@ export const AGENTS = [
     id: 'gemini', name: 'Gemini CLI', detect: '.gemini',
     skillDir: '.gemini/skills/model-router', agentsDir: '.gemini/agents', format: 'md',
     instructions: '.gemini/GEMINI.md', defaultMode: 'manual',
-    providers: { google },
+    providers: { google: { light: 'gemini-3.5-flash-lite', regular: 'gemini-3.8-flash', heavy: 'gemini-4-argon' } },
     docs: 'https://geminicli.com/docs/core/subagents/',
   },
   {
     id: 'copilot', name: 'GitHub Copilot CLI', detect: '.copilot',
     skillDir: '.copilot/skills/model-router', agentsDir: '.copilot/agents', format: 'md',
     instructions: '.copilot/copilot-instructions.md', defaultMode: 'manual',
+    // Display names from the Copilot supported-models page; Gemini dropped (no confirmed light tier).
     providers: {
-      claude: { light: 'claude-haiku-5.5', regular: 'claude-sonnet-5.5', heavy: 'claude-opus-5.5' },
-      openai: { light: 'gpt-6-luna', regular: 'gpt-6.1-sol', heavy: 'gpt-6-astra' },
-      google,
+      claude: { light: 'Claude Haiku 5.5', regular: 'Claude Sonnet 5.5', heavy: 'Claude Opus 5.5' },
+      openai: { light: 'GPT-6 Luna', regular: 'GPT-6.1 Sol', heavy: 'GPT-6 Astra' },
     },
     docs: 'https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli',
   },
@@ -41,24 +40,14 @@ export const AGENTS = [
     id: 'opencode', name: 'OpenCode', detect: '.config/opencode',
     skillDir: '.config/opencode/skills/model-router', agentsDir: '.config/opencode/agents', format: 'md',
     instructions: '.config/opencode/AGENTS.md', defaultMode: 'manual',
-    providers: {
-      claude: { light: 'anthropic/claude-haiku-5-5', regular: 'anthropic/claude-sonnet-5-5', heavy: 'anthropic/claude-opus-5-5' },
-      openai: { light: 'openai/gpt-6-luna', regular: 'openai/gpt-6.1-sol', heavy: 'openai/gpt-6-astra' },
-      google: {
-        light: 'google/gemini-3.5-flash-lite', regular: 'google/gemini-3.8-flash', heavy: 'google/gemini-4-argon',
-      },
-    },
+    providers: {}, // no tier set fully confirmed in docs (opus/haiku IDs not shown)
     docs: 'https://opencode.ai/docs/agents/',
   },
   {
     id: 'cursor', name: 'Cursor', detect: '.cursor',
     skillDir: '.cursor/skills/model-router', agentsDir: '.cursor/agents', format: 'md',
     instructions: null, defaultMode: 'manual', // user rules are settings-UI only
-    providers: {
-      claude: { light: 'claude-haiku-5-5', regular: 'claude-sonnet-5-5', heavy: 'claude-opus-5-5' },
-      openai: { light: 'gpt-5.6-luna', regular: 'gpt-5.6-terra', heavy: 'gpt-5.6-sol' },
-      google,
-    },
+    providers: {}, // docs list display names only, not model IDs
     docs: 'https://cursor.com/docs/subagents',
   },
   {
