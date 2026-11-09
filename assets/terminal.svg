@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 900 400" width="900" height="400" role="img" aria-label="Animated terminal: three requests, each tagged by the router as light, regular or heavy and handled by the matching model">
+  <defs>
+    <clipPath id="c0"><rect x="0" y="70" height="30" width="0"><animate attributeName="width" values="0;0;820;820;0" keyTimes="0;0.036;0.096;0.95;1" dur="14s" repeatCount="indefinite"/></rect></clipPath>
+    <clipPath id="c3"><rect x="0" y="160" height="30" width="0"><animate attributeName="width" values="0;0;820;820;0" keyTimes="0;0.293;0.353;0.95;1" dur="14s" repeatCount="indefinite"/></rect></clipPath>
+    <clipPath id="c6"><rect x="0" y="250" height="30" width="0"><animate attributeName="width" values="0;0;820;820;0" keyTimes="0;0.55;0.61;0.95;1" dur="14s" repeatCount="indefinite"/></rect></clipPath>
+    <style>
+      text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:16px;white-space:pre}
+      .you{fill:#f3f4f6}
+      .dim{fill:#6b7280}
+      .ok{fill:#86efac}
+      .l{fill:#67e8f9}.r{fill:#c4b5fd}.h{fill:#fdba74}
+      .cur{animation:b 1s infinite steps(1)}
+      @keyframes b{50%{opacity:0}}
+    </style>
+  </defs>
+
+  <rect width="900" height="400" rx="16" fill="#0a0a12" stroke="#1f2937"/>
+  <rect width="900" height="40" rx="16" fill="#111827"/>
+  <rect y="24" width="900" height="16" fill="#111827"/>
+  <circle cx="24" cy="20" r="6" fill="#f87171"/>
+  <circle cx="44" cy="20" r="6" fill="#fbbf24"/>
+  <circle cx="64" cy="20" r="6" fill="#34d399"/>
+  <text x="450" y="25" text-anchor="middle" class="dim" style="font-size:13px">your agent + model-router · auto mode</text>
+
+  <!-- 1: light -->
+  <text x="28" y="90" clip-path="url(#c0)"><tspan class="dim">&gt; </tspan><tspan class="you">make the signup button green</tspan></text>
+  <g opacity="0"><text x="28" y="120"><tspan class="dim">  [router] </tspan><tspan class="l">light → haiku</tspan><tspan class="dim">   handing off</tspan></text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.121;0.131;0.95;1" dur="14s" repeatCount="indefinite"/></g>
+  <g opacity="0"><text x="28" y="150"><tspan class="ok">  ✓ </tspan><tspan class="dim">Button.tsx:12  bg-blue-600 → bg-green-600</tspan></text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.207;0.217;0.95;1" dur="14s" repeatCount="indefinite"/></g>
+
+  <!-- 2: regular -->
+  <text x="28" y="180" clip-path="url(#c3)"><tspan class="dim">&gt; </tspan><tspan class="you">write a launch post for the blog</tspan></text>
+  <g opacity="0"><text x="28" y="210"><tspan class="dim">  [router] </tspan><tspan class="r">regular → sonnet</tspan><tspan class="dim">   doing it myself, no handoff</tspan></text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.379;0.389;0.95;1" dur="14s" repeatCount="indefinite"/></g>
+  <g opacity="0"><text x="28" y="240"><tspan class="ok">  ✓ </tspan><tspan class="dim">draft ready: posts/launch.md</tspan></text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.464;0.474;0.95;1" dur="14s" repeatCount="indefinite"/></g>
+
+  <!-- 3: heavy -->
+  <text x="28" y="270" clip-path="url(#c6)"><tspan class="dim">&gt; </tspan><tspan class="you">why is the checkout total off by one cent?</tspan></text>
+  <g opacity="0"><text x="28" y="300"><tspan class="dim">  [router] </tspan><tspan class="h">heavy → opus</tspan><tspan class="dim">   handing off with a full brief</tspan></text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.636;0.646;0.95;1" dur="14s" repeatCount="indefinite"/></g>
+  <g opacity="0"><text x="28" y="330"><tspan class="ok">  ✓ </tspan><tspan class="dim">found it: float maths in cart.ts, switched to integer cents</tspan></text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.721;0.731;0.95;1" dur="14s" repeatCount="indefinite"/></g>
+
+  <text x="28" y="368"><tspan class="dim">&gt; </tspan><tspan class="you cur">█</tspan></text>
+</svg>

@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" width="1000" height="440" role="img" aria-label="Animation: three messages enter the router one by one and each is sent to Haiku, Sonnet or Opus depending on how hard it is">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07070d"/>
+      <stop offset="1" stop-color="#110a1c"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.5" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#fb923c"/>
+    </linearGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="haze" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <path id="p0" d="M330 220 L500 220 C590 220 600 110 680 110"/>
+    <path id="p1" d="M330 220 L680 220"/>
+    <path id="p2" d="M330 220 L500 220 C590 220 600 330 680 330"/>
+    <style>
+      text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+    </style>
+  </defs>
+
+  <rect width="1000" height="440" rx="22" fill="url(#bg)"/>
+  <text x="30" y="40" font-size="13" fill="#6b7280">// every message gets sized up, then sent to the cheapest model that can nail it</text>
+
+  <!-- guide rails -->
+  <g fill="none" stroke-width="2" stroke-dasharray="4 8" stroke-opacity="0.35">
+    <use href="#p0" stroke="#22d3ee"/>
+    <use href="#p1" stroke="#a78bfa"/>
+    <use href="#p2" stroke="#fb923c"/>
+  </g>
+
+  <!-- incoming message cards, one per phase -->
+  <g>
+    <rect x="30" y="170" width="300" height="100" rx="16" fill="#0f1220" stroke="#22d3ee" stroke-opacity="0.6"/>
+    <text x="50" y="196" font-size="12" fill="#6b7280">you</text>
+    <text x="50" y="222" font-size="17" fill="#f3f4f6">make the signup</text>
+    <text x="50" y="246" font-size="17" fill="#f3f4f6">button green</text>
+    <text x="310" y="196" font-size="12" fill="#67e8f9" text-anchor="end">light</text>
+    <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.02;0.3;0.32;1" dur="9s" repeatCount="indefinite"/>
+  </g>
+  <g opacity="0">
+    <rect x="30" y="170" width="300" height="100" rx="16" fill="#0f1220" stroke="#a78bfa" stroke-opacity="0.6"/>
+    <text x="50" y="196" font-size="12" fill="#6b7280">you</text>
+    <text x="50" y="222" font-size="17" fill="#f3f4f6">write a launch post</text>
+    <text x="50" y="246" font-size="17" fill="#f3f4f6">for the blog</text>
+    <text x="310" y="196" font-size="12" fill="#c4b5fd" text-anchor="end">regular</text>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.333;0.353;0.633;0.653;1" dur="9s" repeatCount="indefinite"/>
+  </g>
+  <g opacity="0">
+    <rect x="30" y="170" width="300" height="100" rx="16" fill="#0f1220" stroke="#fb923c" stroke-opacity="0.6"/>
+    <text x="50" y="196" font-size="12" fill="#6b7280">you</text>
+    <text x="50" y="222" font-size="17" fill="#f3f4f6">why is checkout off</text>
+    <text x="50" y="246" font-size="17" fill="#f3f4f6">by one cent?</text>
+    <text x="310" y="196" font-size="12" fill="#fdba74" text-anchor="end">heavy</text>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.667;0.687;0.967;0.987;1" dur="9s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- router core -->
+  <circle cx="500" cy="220" r="58" fill="none" stroke="url(#ring)" stroke-width="2" opacity="0">
+    <animate attributeName="r" values="58;92;92" keyTimes="0;0.4;1" dur="3s" begin="0.9s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0;0" keyTimes="0;0.4;1" dur="3s" begin="0.9s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="500" cy="220" r="58" fill="#0c0c18" stroke="url(#ring)" stroke-width="3"/>
+  <circle cx="500" cy="220" r="72" fill="none" stroke="url(#ring)" stroke-width="2" stroke-dasharray="10 14">
+    <animateTransform attributeName="transform" type="rotate" from="0 500 220" to="360 500 220" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <text x="500" y="218" font-size="18" font-weight="800" fill="#f3f4f6" text-anchor="middle">router</text>
+  <text x="500" y="238" font-size="11" fill="#9ca3af" text-anchor="middle">sizing it up</text>
+
+  <!-- model lanes -->
+  <g>
+    <rect x="680" y="70" width="290" height="80" rx="16" fill="#22d3ee" filter="url(#haze)" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.55;0.55;0;0" keyTimes="0;0.19;0.21;0.3;0.33;1" dur="9s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="680" y="70" width="290" height="80" rx="16" fill="#0b1418" stroke="#22d3ee" stroke-width="2"/>
+    <text x="700" y="104" font-size="22" font-weight="800" fill="#67e8f9">HAIKU</text>
+    <text x="950" y="104" font-size="12" fill="#67e8f9" text-anchor="end">light</text>
+    <text x="700" y="130" font-size="12" fill="#9ca3af">tweaks, renames, short copy</text>
+  </g>
+  <g>
+    <rect x="680" y="180" width="290" height="80" rx="16" fill="#a78bfa" filter="url(#haze)" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.55;0.55;0;0" keyTimes="0;0.523;0.543;0.633;0.663;1" dur="9s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="680" y="180" width="290" height="80" rx="16" fill="#120f1d" stroke="#a78bfa" stroke-width="2"/>
+    <text x="700" y="214" font-size="22" font-weight="800" fill="#c4b5fd">SONNET</text>
+    <text x="950" y="214" font-size="12" fill="#c4b5fd" text-anchor="end">regular</text>
+    <text x="700" y="240" font-size="12" fill="#9ca3af">features, research, writing</text>
+  </g>
+  <g>
+    <rect x="680" y="290" width="290" height="80" rx="16" fill="#fb923c" filter="url(#haze)" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.55;0.55;0;0" keyTimes="0;0.857;0.877;0.967;0.997;1" dur="9s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="680" y="290" width="290" height="80" rx="16" fill="#1a110a" stroke="#fb923c" stroke-width="2"/>
+    <text x="700" y="324" font-size="22" font-weight="800" fill="#fdba74">OPUS</text>
+    <text x="950" y="324" font-size="12" fill="#fdba74" text-anchor="end">heavy</text>
+    <text x="700" y="350" font-size="12" fill="#9ca3af">architecture, maths, nasty bugs</text>
+  </g>
+
+  <!-- the travelling packets -->
+  <circle r="9" fill="#22d3ee" filter="url(#glow)" opacity="0">
+    <animateMotion dur="9s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.04;0.2;1" calcMode="linear"><mpath href="#p0"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.03;0.04;0.2;0.22;1" dur="9s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="9" fill="#a78bfa" filter="url(#glow)" opacity="0">
+    <animateMotion dur="9s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.373;0.533;1" calcMode="linear"><mpath href="#p1"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.363;0.373;0.533;0.553;1" dur="9s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="9" fill="#fb923c" filter="url(#glow)" opacity="0">
+    <animateMotion dur="9s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;0.707;0.867;1" calcMode="linear"><mpath href="#p2"/></animateMotion>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.697;0.707;0.867;0.887;1" dur="9s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="30" y="414" font-size="12" fill="#4b5563">[router: light → haiku]   [router: regular → sonnet]   [router: heavy → opus]</text>
+</svg>
