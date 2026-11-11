@@ -1,10 +1,45 @@
 {
   "name": "agent-model-router",
   "version": "0.1.0",
+  "description": "One skill for every coding agent: sizes each task and hands it to the cheapest model that can do it well.",
+  "keywords": [
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "github-copilot",
+    "ai-agents",
+    "agent-skills",
+    "skill-md",
+    "llm",
+    "model-routing",
+    "token-savings",
+    "haiku",
+    "sonnet",
+    "opus"
+  ],
+  "homepage": "https://github.com/anmol26rajput/agent-model-router#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anmol26rajput/agent-model-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anmol26rajput/agent-model-router/issues"
+  },
+  "author": "Anmol",
   "type": "module",
-  "bin": { "agent-model-router": "bin/agent-model-router.js" },
-  "engines": { "node": ">=18" },
-  "scripts": { "test": "node --test" },
-  "files": ["bin", "src", "skill"],
+  "bin": {
+    "agent-model-router": "bin/agent-model-router.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skill"
+  ],
   "license": "MIT"
 }
