@@ -4,7 +4,7 @@
 
 <br>
 
-[![status](https://img.shields.io/badge/status-in%20development-fb923c?style=for-the-badge)](#roadmap)
+[![npm](https://img.shields.io/npm/v/agent-model-router?style=for-the-badge&color=fb923c)](https://www.npmjs.com/package/agent-model-router)
 [![license](https://img.shields.io/badge/license-MIT-a78bfa?style=for-the-badge)](LICENSE)
 [![agents](https://img.shields.io/badge/agents-8%2B-22d3ee?style=for-the-badge)](#works-with)
 
@@ -144,8 +144,7 @@ Unverified agents can still opt in with `router auto` (agents with helpers only)
 
 ## Install
 
-> [!NOTE]
-> agent-model-router isn't on npm yet. From a clone, run `node bin/agent-model-router.js install`. The `npx` commands below are what it will look like once published.
+Needs Node 18 or newer.
 
 ```bash
 npx agent-model-router install
@@ -217,9 +216,9 @@ That's about **9% less**, and every one of the 15 requests was routed the way th
 - [x] Design
 - [x] Skill and helpers for Claude Code
 - [x] Before-and-after savings test (first run)
-- [x] Installer (runs from a clone; not on npm yet)
+- [x] Installer
 - [x] Tune the tier rules from the first test
-- [ ] Publish to npm under a free name
+- [x] Publish to npm
 - [ ] Verify Codex, Gemini CLI, Copilot, OpenCode, Cursor
 - [ ] Router proxy for API-key users (maybe)
 
