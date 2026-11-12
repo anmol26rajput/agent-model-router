@@ -18,7 +18,9 @@ for each provider. `samples.md` has example requests with their tiers.
 | Regular | Multi-file features, research with sources, articles and longer writing, explaining code, debugging with a clear error message |
 | Heavy | Architecture and system design, maths, algorithms and calculations, bugs that survived one fix attempt (even if the next fix looks small), security-sensitive changes, migrations, large refactors, anything where a wrong answer is costly |
 
-When the signals are mixed, round up one tier.
+Count files first: if the work creates or changes more than one file, it is at
+least regular, however small each edit is. When the signals are mixed, round up
+one tier.
 
 ## Routing (auto mode)
 
