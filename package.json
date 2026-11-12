@@ -1,6 +1,6 @@
 {
   "name": "agent-model-router",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "One skill for every coding agent: sizes each task and hands it to the cheapest model that can do it well.",
   "keywords": [
     "claude-code",
